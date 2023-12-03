@@ -1,13 +1,15 @@
 defmodule Aoc2023.First do
-  def part1 do
-    String.split(get_challenge(), "\n", trim: true)
+  @spec part1(String.t()) :: integer()
+  def part1(challenge) do
+    String.split(challenge, "\n", trim: true)
     |> Enum.map(fn x -> String.graphemes(x) |> Enum.filter(&Aoc2023.First.is_numeric?/1) end)
     |> Enum.map(fn x -> String.to_integer("#{List.first(x)}#{List.last(x)}") end)
     |> Enum.reduce(&(&1 + &2))
   end
 
-  def part2 do
-    String.split(get_challenge(), "\n", trim: true)
+  @spec part2(String.t()) :: integer()
+  def part2(challenge) do
+    String.split(challenge, "\n", trim: true)
     |> Enum.map(fn x ->
       x
       |> String.replace("one", "one1one")
@@ -29,8 +31,9 @@ defmodule Aoc2023.First do
     Regex.match?(~r/^\d+$/, str)
   end
 
-  defp get_challenge do
-    {:ok, challenge} = Aoc2023.read_challenge("first")
+  @spec get_challenge(integer(), boolean()) :: String.t()
+  def get_challenge(part, is_prod \\ false) do
+    {:ok, challenge} = Aoc2023.read_challenge("first", part, is_prod)
 
     challenge
   end
